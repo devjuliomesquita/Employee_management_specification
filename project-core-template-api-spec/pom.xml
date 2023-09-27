@@ -89,6 +89,10 @@
 	</repositories>
 
 	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/devjuliomesquita/Employee_management_specification</url>
+		</repository>
 <!--		<repository>-->
 <!--			<id>gitlab-maven</id>-->
 <!--			<url>https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/maven</url>-->
@@ -135,9 +139,45 @@
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.6.0</version>
+					<configuration>
+						<!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.9.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<finalName>${project.artifactId}</finalName>
 
 		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>8</source>
+					<target>8</target>
+				</configuration>
+			</plugin>
+
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-release-plugin</artifactId>-->
+<!--				<version>3.0.0-M1</version>-->
+<!--			</plugin>-->
 
 			<!-- OAS : Code Gen -->
 			<!-- DOC:
