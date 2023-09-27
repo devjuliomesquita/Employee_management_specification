@@ -1,0 +1,42 @@
+extends:
+  # Default
+  - spectral:oas
+  # OWASP TOP 10 Security
+  - "https://unpkg.com/@stoplight/spectral-owasp-ruleset/dist/ruleset.mjs"
+  #  Documentation Rules
+  - "https://unpkg.com/@stoplight/spectral-documentation/dist/ruleset.mjs"
+  # Versioning
+  - "https://unpkg.com/@stoplight/spectral-url-versioning/dist/ruleset.mjs"
+  # Zalando Rules
+  - "https://raw.githubusercontent.com/baloise-incubator/spectral-ruleset/main/zalando.yml"
+aliases:
+  PathItem:
+    - $.paths[*]
+  OperationObject:
+    - "#PathItem[get,put,post,delete,options,head,patch,trace]"
+rules:
+  owasp:api2:2019-protection-global-unsafe: "off"
+  owasp:api2:2019-protection-global-unsafe-strict: "off"
+  owasp:api4:2019-rate-limit: "off"
+  owasp:api4:2019-rate-limit-responses-429: "off"
+  must-use-snake-case-for-property-names: "off"
+  must-have-info-x-api-id: "off"
+  must-provide-api-audience: "off"
+  operation-id-camel-case:
+    description: Operation IDs must be camelCase since some generators do not support kebab-cases.
+    message: 'Operation ID "{{value}}" must be camelCase since some generators  do not support kebab-cases.'
+    given: "#OperationObject"
+    severity: error
+    then:
+      field: operationId
+      function: casing
+      functionOptions:
+        type: camel
+  camel-case-enforcement:
+    message: "Property is not named in lower camel case: {{path}}, {{property}}"
+    severity: error
+    given: $..[?(@.type === 'object' && @.properties)].properties.*~
+    then:
+      function: casing
+      functionOptions:
+        type: camel

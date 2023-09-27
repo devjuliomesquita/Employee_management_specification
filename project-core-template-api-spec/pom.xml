@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>br.com.juliomesquita</groupId>
+	<artifactId>project-core-template-api-spec</artifactId>
+	<version>0.0.1</version>
+	<name>project-core-template-api</name>
+	<description>Project core Template Specification </description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- versão do java-->
+		<java.version>17</java.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<project.build.plugin.oas.version>6.6.0</project.build.plugin.oas.version>
+		<project.build.plugin.exec.version>3.1.0</project.build.plugin.exec.version>
+		<project.build.plugin.specgen.legacy.version>1.4</project.build.plugin.specgen.legacy.version>
+
+<!--		<project.gitlab.repo.maven.url>-->
+<!--			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/maven</project.gitlab.repo.maven.url>-->
+<!--		<project.gitlab.repo.npm.url>-->
+<!--			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/npm/</project.gitlab.repo.npm.url>-->
+
+		<!-- OPEN API -->
+
+		<oas.home>${project.basedir}/src/main/resources/openapi</oas.home>
+		<oas.spec.name>${project.artifactId}_oas</oas.spec.name>
+		<oas.spec.extension>.yml</oas.spec.extension>
+		<oas.spec.file.location>${oas.home}/spec/${oas.spec.name}${oas.spec.extension}</oas.spec.file.location>
+		<oas.spec.project.groupId>${project.groupId}</oas.spec.project.groupId>
+		<oas.spec.project.artifactId>${project.artifactId}</oas.spec.project.artifactId>
+		<oas.spec.project.artifactVersion>${project.version}</oas.spec.project.artifactVersion>
+
+		<!-- Codegen -->
+		<web.oas.codegen.be.skip>false</web.oas.codegen.be.skip>
+		<web.oas.codegen.be.output.path>${project.build.directory}/generated-sources/openapi</web.oas.codegen.be.output.path>
+		<web.oas.codegen.be.package.base>${project.groupId}.${project.artifactId}.oas</web.oas.codegen.be.package.base>
+		<web.oas.codegen.be.tags.use>true</web.oas.codegen.be.tags.use>
+
+		<web.oas.codegen.fe.skip>false</web.oas.codegen.fe.skip>
+		<web.oas.codegen.fe.output.path>${oas.home}/generated/fe/lib-client</web.oas.codegen.fe.output.path>
+		<web.oas.codegen.fe.angular.version>16</web.oas.codegen.fe.angular.version>
+		<web.oas.codegen.fe.npm.scope>@template</web.oas.codegen.fe.npm.scope>
+		<web.oas.codegen.fe.npm.name>${web.oas.codegen.fe.npm.scope}/${project.artifactId}</web.oas.codegen.fe.npm.name>
+		<web.oas.codegen.fe.npm.version>${project.version}</web.oas.codegen.fe.npm.version>
+		<web.oas.codegen.fe.naming.model.sufix>ApiModel</web.oas.codegen.fe.naming.model.sufix>
+		<web.oas.codegen.fe.naming.service.sufix>ApiService</web.oas.codegen.fe.naming.service.sufix>
+
+		<web.oas.docgen.postman.skip>true</web.oas.docgen.postman.skip>
+		<web.oas.docgen.postman.output.path>${oas.home}/generated/docs/postman</web.oas.docgen.postman.output.path>
+		<web.oas.docgen.postman.output.file>
+			${web.oas.docgen.postman.output.path}/${oas.spec.name}_postman.json</web.oas.docgen.postman.output.file>
+		<web.oas.docgen.postman.version>v2</web.oas.docgen.postman.version>
+		<web.oas.docgen.postman.customization>folderStrategy=Tags,includeAuthInfoInExample=false</web.oas.docgen.postman.customization>
+
+		<web.oas.docgen.html.skip>true</web.oas.docgen.html.skip>
+		<web.oas.docgen.html.output.path>${oas.home}/generated/docs/html</web.oas.docgen.html.output.path>
+
+		<web.oas.docgen.uml.skip>false</web.oas.docgen.uml.skip>
+		<web.oas.docgen.uml.output.path>${oas.home}/generated/docs/uml</web.oas.docgen.uml.output.path>
+
+		<web.oas.specgen.spec2json.skip>false</web.oas.specgen.spec2json.skip>
+		<web.oas.specgen.spec2json.output.path>${oas.home}/generated/spec/json</web.oas.specgen.spec2json.output.path>
+		<web.oas.specgen.spec2json.output.file.name>${oas.spec.name}.json</web.oas.specgen.spec2json.output.file.name>
+
+		<!--Variáveis para as depedências-->
+		<web.oas.jackson-databind-nullable.version>0.2.6</web.oas.jackson-databind-nullable.version>
+		<web.oas.swagger-annotations.version>2.2.10</web.oas.swagger-annotations.version>
+		<web.oas.problem.version>0.27.1</web.oas.problem.version>
+
+	</properties>
+
+	<repositories>
+<!--		<repository>-->
+<!--			<id>gitlab-maven</id>-->
+<!--			<url>${project.gitlab.repo.maven.url}</url>-->
+<!--		</repository>-->
+	</repositories>
+
+	<distributionManagement>
+<!--		<repository>-->
+<!--			<id>gitlab-maven</id>-->
+<!--			<url>https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/maven</url>-->
+<!--		</repository>-->
+<!--		<snapshotRepository>-->
+<!--			<id>gitlab-maven</id>-->
+<!--			<url>https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/maven</url>-->
+<!--		</snapshotRepository>-->
+	</distributionManagement>
+
+	<dependencies>
+		<!-- OPEN API -->
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${web.oas.jackson-databind-nullable.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${web.oas.swagger-annotations.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.zalando</groupId>
+			<artifactId>problem</artifactId>
+			<version>${web.oas.problem.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.zalando</groupId>
+			<artifactId>jackson-datatype-problem</artifactId>
+			<version>${web.oas.problem.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.zalando</groupId>
+			<artifactId>problem-gson</artifactId>
+			<version>${web.oas.problem.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+
+			<!-- OAS : Code Gen -->
+			<!-- DOC:
+			https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-maven-plugin/README.md -->
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${project.build.plugin.oas.version}</version>
+				<executions>
+
+					<!-- OAS: Back-end files -->
+					<!-- DOC:
+					https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/spring.md -->
+					<execution>
+						<id>openapi-generate-spring</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
+							<!-- IO Options -->
+							<inputSpec>${oas.spec.file.location}</inputSpec>
+							<output>${web.oas.codegen.be.output.path}</output>
+							<cleanupOutput>true</cleanupOutput>
+							<generatorName>spring</generatorName>
+							<skip>${web.oas.codegen.be.skip}</skip>
+
+							<verbose>false</verbose>
+							<logToStderr>true</logToStderr>
+							<skipOverwrite>false</skipOverwrite>
+							<skipIfSpecIsUnchanged>false</skipIfSpecIsUnchanged>
+							<skipValidateSpec>false</skipValidateSpec>
+							<strictSpec>false</strictSpec>
+
+							<!-- Package Options -->
+							<packageName>${web.oas.codegen.be.package.base}</packageName>
+							<apiPackage>${web.oas.codegen.be.package.base}.api</apiPackage>
+							<modelPackage>${web.oas.codegen.be.package.base}.model</modelPackage>
+							<invokerPackage>${web.oas.codegen.be.package.base}.invoker</invokerPackage>
+
+							<!-- Generation Options -->
+							<generateApis>true</generateApis>
+							<generateApiTests>true</generateApiTests>
+							<generateApiDocumentation>true</generateApiDocumentation>
+
+							<generateModels>true</generateModels>
+							<generateModelTests>true</generateModelTests>
+							<generateModelDocumentation>true</generateModelDocumentation>
+
+							<generateSupportingFiles>true</generateSupportingFiles>
+
+							<configOptions>
+								<useSpringBoot3>true</useSpringBoot3>
+								<useTags>${web.oas.codegen.be.tags.use}</useTags>
+								<interfaceOnly>true</interfaceOnly>
+								<skipDefaultInterface>false</skipDefaultInterface>
+								<useBeanValidation>true</useBeanValidation>
+								<openapiNormalizer>REF_AS_PARENT_IN_ALLOF=true</openapiNormalizer>
+							</configOptions>
+						</configuration>
+					</execution>
+
+					<!-- OAS: Front-end files -->
+					<!-- DOC:
+					https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/typescript-angular.md -->
+					<execution>
+						<id>
+							openapi-generate-typescript-angular</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
+							<!-- IO Options -->
+							<inputSpec>${oas.spec.file.location}</inputSpec>
+							<output>${web.oas.codegen.fe.output.path}</output>
+							<cleanupOutput>true</cleanupOutput>
+							<generatorName>typescript-angular</generatorName>
+							<skip>${web.oas.codegen.fe.skip}</skip>
+
+							<configOptions>
+								<fileNaming>kebab-case</fileNaming>
+								<ngVersion>${web.oas.codegen.fe.angular.version}</ngVersion>
+								<providedIn>none</providedIn>
+								<supportsES6>true</supportsES6>
+								<npmName>${web.oas.codegen.fe.npm.name}</npmName>
+								<npmVersion>${web.oas.codegen.fe.npm.version}</npmVersion>
+								<modelSuffix>${web.oas.codegen.fe.naming.model.sufix}</modelSuffix>
+								<serviceSuffix>${web.oas.codegen.fe.naming.service.sufix}</serviceSuffix>
+							</configOptions>
+
+						</configuration>
+					</execution>
+
+					<!-- OAS: Documentation files = HTML -->
+					<!-- DOC:
+					https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/html2.md -->
+					<execution>
+						<id>openapi-generate-documentation-html</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
+							<!-- IO Options -->
+							<inputSpec>${oas.spec.file.location}</inputSpec>
+							<output>${web.oas.docgen.html.output.path}</output>
+							<cleanupOutput>true</cleanupOutput>
+							<generatorName>html2</generatorName>
+							<skip>${web.oas.docgen.html.skip}</skip>
+						</configuration>
+					</execution>
+
+					<!-- OAS: Documentation files = UML -->
+					<!-- DOC:
+					https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/plantuml.md -->
+					<execution>
+						<id>openapi-generate-documentation-uml</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
+							<!-- IO Options -->
+							<inputSpec>${oas.spec.file.location}</inputSpec>
+							<output>${web.oas.docgen.uml.output.path}</output>
+							<cleanupOutput>true</cleanupOutput>
+							<generatorName>plantuml</generatorName>
+							<skip>${web.oas.docgen.uml.skip}</skip>
+						</configuration>
+					</execution>
+
+					<!-- OAS: Spec as JSON file -->
+					<!-- DOC:
+					https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/openapi.md -->
+					<execution>
+						<id>openapi-generate-spec-json</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
+							<!-- IO Options -->
+							<inputSpec>${oas.spec.file.location}</inputSpec>
+							<output>${web.oas.specgen.spec2json.output.path}</output>
+							<cleanupOutput>true</cleanupOutput>
+							<generatorName>openapi</generatorName>
+							<skip>${web.oas.specgen.spec2json.skip}</skip>
+
+							<configOptions>
+								<outputFileName>${web.oas.specgen.spec2json.output.file.name}</outputFileName>
+							</configOptions>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

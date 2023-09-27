@@ -1,0 +1,49 @@
+image: maven:3.8.1-openjdk-17-slim
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+stages:
+  - mvn-compile-deploy
+  - npm-publish
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: always
+
+mvn-compile-deploy:
+  stage: mvn-compile-deploy
+  script:
+    - mvn clean compile
+    - mvn deploy -s $GITLAB_MAVEN_REPOSITORY_SETTINGS -f target/generated-sources/openapi/pom.xml -DaltDeploymentRepository=$GITLAB_MAVEN_REPOSITORY_ID_URL
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - .m2/repository
+  artifacts:
+    paths:
+      - src/main/resources/openapi/generated/fe/lib-client
+
+npm-publish:
+  image: node:16.18.0-alpine
+  stage: npm-publish
+  script:
+    - cd src/main/resources/openapi/generated/fe/lib-client
+    # Codegen do not support Angular 16 atm (see https://github.com/OpenAPITools/openapi-generator/issues/15874)
+    # Workaround is to bump some libs to a new version manually
+    # To be removed once the plugin fully supports it
+    - |
+      sed -i 's#"rxjs": "\^7\.5\.5",#"rxjs": "\^7\.8\.1",#g' package.json
+    - |
+      sed -i 's#"ng-packagr": "\^15\.0\.2",#"ng-packagr": "\^16\.1\.0",#g' package.json
+    - |
+      sed -i 's#"zone\.js": "\^0\.11\.5"#"zone\.js": "\^0\.13\.1"#g' package.json
+    - cat package.json
+    # FE generated code requires build before publish
+    - echo -e "@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL\n$GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN" >> .npmrc
+    - npm install
+    - npm run build
+    - cd dist
+    - echo -e "@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL\n$GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN" >> .npmrc
+    - npm publish --verbose

@@ -1,0 +1,875 @@
+openapi: 3.0.3
+info:
+  title: Project Core Template
+  version: '1.0.0'
+  description: |
+    Template used for creating new projects.
+
+    ### Check out the resources created:
+
+    - TODO
+    - TODO
+    - TODO
+  termsOfService: https://teste.com.br
+  contact:
+    name: Júlio Mesquita
+    url: https://teste.com.br
+    email: juliocesarmcamilo@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+externalDocs:
+  description: Link externo - Documentação
+  url: https://teste.com.br
+servers:
+  - url: "{protocol}://{devServerHost}:{devServerPort}/api/project-core/v1"
+    description: development instance
+    variables:
+      protocol:
+        description: a
+        default: https
+        enum:
+          - https
+          - http
+      devServerHost:
+        description: host name of the development server
+        default: localhost
+        enum:
+          - localhost
+          # add other hosts here
+      devServerPort:
+        description: host port of the api service is running
+        default: "4070"
+        enum:
+          - "4070"
+          - "8080"
+          # add other ports here
+tags:
+  - name: Project Core - Employee
+    description: Management of Employee
+
+paths:
+  #Employee#
+  /projectcore/employee:
+    post:
+      tags:
+        - "Project Core - Employee"
+      summary: TODO
+      description: TODO
+      operationId: createEmployee
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+        
+
+              
+  /projectcore/employee/{id}:
+    get:
+      tags:
+        - "Project Core - Employee"
+      summary: TODO
+      description: TODO
+      operationId: getEmployeeById
+      parameters:
+        - $ref: "#/components/parameters/EmployeeIdParam"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    
+    put:
+      tags:
+        - "Project Core - Employee"
+      summary: TODO
+      description: TODO
+      operationId: updateEmployee
+      parameters:
+        - $ref: "#/components/parameters/EmployeeIdParam"
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+
+    delete:
+      tags:
+        - "Project Core - Employee"
+      summary: TODO
+      description: TODO
+      operationId: deleteEmployee
+      parameters:
+        - $ref: "#/components/parameters/EmployeeIdParam"
+      responses:
+        "204":
+          description: No Content
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    patch:
+      tags:
+        - "Project Core - Employee"
+      summary: TODO
+      description: TODO
+      operationId: patchEmployee
+      parameters:
+        - $ref: "#/components/parameters/EmployeeIdParam"
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeePatchRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeePatchResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+
+  /projectcore/employee/query:
+    post:
+      tags:
+        - "Project Core - Employee"
+      summary: TODO
+      description: TODO
+      operationId: queryEmployee
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeQueryResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+        
+components:
+  parameters:
+    EmployeeIdParam:
+      name: id
+      description: todo
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/EmployeeId"
+
+#Responses Padrão#
+  responses:
+    400BadRequest:
+      description: Bad Request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    401Unauthorized:
+      description: Unauthorized.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    403Forbidden:
+      description: Forbidden.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    409Conflict:
+      description: Conflict.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    500InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    GeneralError:
+      description: Unexpected Error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+
+  schemas:
+    #Problems#
+    Problem:
+      description: todo.
+      type: object
+      properties:
+        type:
+          description: |
+            An absolute URI that identifies the problem type.  When dereferenced,
+            it SHOULD provide human-readable documentation for the problem type
+            (e.g., using HTML).
+          type: string
+          format: uri
+          minLength: 10
+          maxLength: 2147483647
+          default: "about:blank"
+          example: "https://lampp-it/problem/constraint-violation"
+        title:
+          description: |
+            A short, summary of the problem type. Written in english and readable
+            for engineers (usually not suited for non technical stakeholders and
+            not localized); example: Service Unavailable
+          type: string
+          minLength: 1
+          maxLength: 2147483647
+        status:
+          description: |
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          description: |
+            A human readable explanation specific to this occurrence of the
+            problem.
+          type: string
+          minLength: 1
+          maxLength: 2147483647
+          example: Connection to database timed out
+        instance:
+          description: |
+            An absolute URI that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 2147483647
+    #ID'S#
+    IdAsUUID:
+      description: todo
+      type: string
+      pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      minLength: 36
+      maxLength: 36
+    #Query#
+    QueryRequest:
+      description: todo
+      type: object
+      properties:
+        filter:
+          type: array
+          items:
+            $ref: "#/components/schemas/QueryRequestFilterItem"
+          minItems: 0
+          maxItems: 2147483647
+        pagination:
+          $ref: "#/components/schemas/QueryRequestPagination"
+        sort:
+          $ref: "#/components/schemas/QueryRequestSort"
+
+    QueryRequestFilterItem:
+      description: todo
+      properties:
+        key:
+          type: string
+          pattern: "^([a-zA-Z0-9_]){1,64}$"
+          nullable: false
+          minLength: 1
+          maxLength: 64
+        value:
+          type: string
+          pattern: '^[a-zA-Z0-9À-ÿ\s/\\_\,]{1,2048}$'
+          nullable: false
+          minLength: 1
+          maxLength: 2048
+        operator:
+          type: string
+          enum: [EQ, GT, GTE, LT, LTE, IN, NOT_IN, IN_LIKE, NOT_IN_LIKE]
+          default: "EQ"
+      required:
+        - key
+        - value
+
+    QueryRequestPagination:
+      description: todo
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 2147483647
+          default: 0
+        pageSize:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 2147483647
+          default: 10
+      required:
+        - pageNumber
+        - pageSize
+
+    QueryRequestSort:
+      description: todo
+      type: array
+      items:
+        $ref: "#/components/schemas/QuerySortItem"
+      minItems: 0
+      maxItems: 2147483647
+
+    QuerySortItem:
+      description: todo
+      properties:
+        key:
+          type: string
+          pattern: "^([a-zA-Z0-9_]){1,128}$"
+          nullable: false
+          minLength: 1
+          maxLength: 128
+        value:
+          type: string
+          enum: [ASC, DESC]
+          nullable: false
+          default: "ASC"
+      required:
+        - key
+        - value
+
+    BaseQueryResponse:
+      description: todo
+      type: object
+      x-parent: abstract
+      properties:
+        pagination:
+          $ref: "#/components/schemas/QueryResponsePagination"
+      required:
+        - pagination
+
+    QueryResponsePagination:
+      description: todo
+      allOf:
+        - $ref: "#/components/schemas/QueryRequestPagination"
+        - type: object
+          properties:
+            totalCount:
+              type: integer
+              format: int64
+              minimum: 0
+              maximum: 9223372036854775807
+              nullable: false
+            resultSize:
+              type: integer
+              format: int32
+              minimum: 0
+              maximum: 2147483647
+              nullable: false
+          required:
+            - totalCount
+            - resultSize
+    
+    #Employee#
+    EmployeeId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
+    EmployeeGeneralInformation:
+      description: todo
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 80
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
+        level:
+          $ref: "#/components/schemas/EmployeeLevelType"
+        validityStartDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        validityEndDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+      required:
+        - name
+        - level
+
+    EmployeeLevelType:
+      description: todo.
+      type: string
+      enum:
+        - TRAINEE
+        - JUNIOR
+        - MIDLE
+        - SENIOR
+
+    CourseId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
+    CourseStatus:
+      description: todo
+      type: string
+      enum:
+        - PENDENTE
+        - ANDAMENTO
+        - CONCLUIDO
+
+    CourseInvestmentType:
+      description: todo
+      type: string
+      enum:
+        - GRATUITO
+        - COPARTICIPACAO
+        - EMPRESA
+        - BENEFICIO
+        - COLABORADOR
+
+    CourseCertificationType:
+      description: todo
+      type: string
+      enum:
+        - COURSE_BASE
+        - PROFESSIONAL_CERTIFICATE
+        - POSTGRADUATE
+        - GRADUATE
+
+    LncType:
+      description: todo
+      type: string
+      enum:
+        - ABERTO
+        - PENDENTE
+        - APROVADO
+        - REPROVADO
+        - FECHADO
+
+    SkillId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
+    CourseSkill:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/SkillId"
+          nullable: false
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 50
+      required:
+        - "name"
+
+    LncId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
+    CourseLnc:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/LncId"
+          nullable: false
+        validityCreateDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        status:
+          $ref: "#/components/schemas/LncType"
+          nullable: false
+      required:
+        - "validityCreateDate"
+        - "status"
+
+    EmployeeCourse:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/CourseId"
+          nullable: false
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 120
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 1000
+        institution:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 120
+        hour:
+          type: integer
+          format: int32
+          nullable: false
+          minimum: 1
+          maximum: 2147483647
+        certificationType:
+          $ref: "#/components/schemas/CourseCertificationType"
+          nullable: false
+        investmentType:
+          $ref: "#/components/schemas/CourseInvestmentType"
+          nullable: false
+        value:
+          type: number
+          format: double
+          nullable: false
+          minimum: 0
+        validityStartDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        validityEndDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        status:
+          $ref: "#/components/schemas/CourseStatus"
+        skill:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourseSkill"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        lnc:
+          $ref: "#/components/schemas/CourseLnc"
+          nullable: false
+      required:
+        - "name"
+        - "description"
+        - "institution"
+        - "hour"
+        - "certificationType"
+        - "investmentType"
+        - "validityStartDate"
+        - "validityEndDate"
+        - "status"
+        - "skill"
+        - "lnc"
+
+    OfficeId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
+    EmployeeOffice:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/OfficeId"
+          nullable: false
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 120
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 1000
+      required:
+        - "name"
+        - "description"
+
+    DepartmentId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
+    EmployeeDepartment:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/DepartmentId"
+          nullable: false
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 120
+        acronym:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 5
+      required:
+        - "name"
+        - "acronym"
+
+    EmployeeRequest:
+      description: TODO
+      type: object
+      properties:
+        generalInformation:
+          $ref: "#/components/schemas/EmployeeGeneralInformation"
+          nullable: false
+        course:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeCourse"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        office:
+          $ref: "#/components/schemas/EmployeeOffice"
+          nullable: false
+        department:
+          $ref: "#/components/schemas/EmployeeDepartment"
+          nullable: false
+      required:
+        - "generalInformation"
+        - "course"
+        - "office"
+        - "department"
+
+    EmployeeResponse:
+      description: TODO
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/EmployeeRequest"
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/EmployeeId"
+
+    EmployeeQueryResponse:
+      description: TODO
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseQueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/EmployeeQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+
+    EmployeeQueryResult:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/EmployeeId"
+        employeeName:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 80
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
+        employeeLevel:
+          $ref: "#/components/schemas/EmployeeLevelType"
+        employeeCourse:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 80
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
+      required:
+        - id
+        - employeeName
+        - employeeLevel
+        - employeeCourse
+
+    EmployeePatchRequest:
+      description: todo
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeKeys"
+          nullable: false
+          minItems: 1
+          maxItems: 10 #Remember to increase this if there is more keys in the enum
+        payload:
+          $ref: "#/components/schemas/EmployeePatchTransportPayload"
+          nullable: false
+      required:
+        - keys
+        - payload
+        
+    EmployeeKeys:
+      description: TODO
+      type: string
+      enum:
+        - EMPLOYEE_GENERAL_INFO
+        - EMPLOYEE_COURSE
+
+    EmployeePatchTransportPayload:
+      description: TODO
+      type: object
+      properties:
+        generalInformation:
+          $ref: "#/components/schemas/EmployeeGeneralInformation"
+          nullable: false
+        course:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeCourse"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+    
+    EmployeePatchResponse:
+      description: todo
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeKeys"
+          nullable: false
+          minItems: 1
+          maxItems: 10 #Remember to increase this if there is more keys in the enum
+        payload:
+          $ref: "#/components/schemas/EmployeePatchTransportPayload"
+          nullable: false
+      required:
+        - keys
+        - payload
+
+    
+  
+    
+
+  
